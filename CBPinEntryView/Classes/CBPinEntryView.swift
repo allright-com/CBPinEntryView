@@ -98,6 +98,12 @@ public protocol CBPinEntryViewDelegate: class {
     @IBInspectable open var secureCharacter: String = CBPinEntryViewDefaults.secureCharacter
 
     @IBInspectable open var keyboardType: Int = CBPinEntryViewDefaults.keyboardType
+	
+	open var codePlaceholder: Placeholder = .none {
+		didSet {
+			updateButtonStyles()
+		}
+	}
     
     open var textContentType: UITextContentType? {
         didSet {
@@ -116,6 +122,11 @@ public protocol CBPinEntryViewDelegate: class {
             }
         }
     }
+	
+	public enum Placeholder {
+		case none
+		case custom(String)
+	}
 
     public enum AllowedEntryTypes: String {
         case any, numerical, alphanumeric, letters
@@ -232,6 +243,13 @@ public protocol CBPinEntryViewDelegate: class {
             button.layer.cornerRadius = entryCornerRadius
             button.layer.borderColor = entryDefaultBorderColour.cgColor
             button.layer.borderWidth = entryBorderWidth
+			
+			switch codePlaceholder {
+			case .custom(let placeholder):
+				button.setTitle(placeholder, for: .normal)
+			case .none:
+				break
+			}
         }
     }
 
