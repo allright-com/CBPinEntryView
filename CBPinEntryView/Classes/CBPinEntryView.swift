@@ -402,7 +402,12 @@ extension CBPinEntryView: UITextFieldDelegate {
                     button.layer.borderColor = entryBorderColour.cgColor
                     button.backgroundColor = entryEditingBackgroundColour
                     UIView.setAnimationsEnabled(false)
-                    button.setTitle("", for: .normal)
+		    switch codePlaceholder {
+			case .custom(let placeholder):
+			    button.setTitle(placeholder, for: .normal)
+			case .none:
+			    button.setTitle("", for: .normal)
+		    }
                     UIView.setAnimationsEnabled(true)
                 } else {
                     button.layer.borderColor = entryDefaultBorderColour.cgColor
