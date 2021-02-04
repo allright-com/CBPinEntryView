@@ -300,7 +300,12 @@ public protocol CBPinEntryViewDelegate: class {
         setError(isError: false)
         textField.text = ""
         for button in entryButtons {
-            button.setTitle("", for: .normal)
+            switch codePlaceholder {
+	    case .custom(let placeholder):
+		    button.setTitle(placeholder, for: .normal)
+	    case .none:
+		    button.setTitle("", for: .normal)
+	    }
         }
 
         if let firstButton = entryButtons.first {
